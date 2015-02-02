@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="store">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+</head>
+<body>
+    <div ng-controller="ScrapController as scrap">
+        <button ng-click="scrap.scrap()" ng-hide="scrap.inventory.isFull()">Pick Something Up</button>
+        {{scrap.random}}
+    </div>
+
+    <div ng-controller="InventoryController as inventory">
+        <h1>Inventory</h1>
+        <h2>Fullness : {{inventory.inventory.getTotalQuantity()}} / {{inventory.inventory.getMaxQuantity()}}</h2>
+        <div ng-repeat="item in inventory.inventory.getItems()" ng-show="item.quantity">
+            <h1>{{item.quantity}} - {{item.name}}</h1>
+            <h2>{{item.price|currency}}</h2>
+            <p>{{item.description}}</p>
+        </div>
+        <div ng-show="inventory.inventory.getTotalQuantity()==0">
+            Empty inventory
+        </div>
+    </div>
+
+    <div ng-controller="RecipesController as cookbook">
+        <h1>Recipes</h1>
+        <ul>
+            <li ng-repeat="recipe in cookbook.recipes" ng-show="recipe.can">
+                {{recipe.name}}
+                <button ng-click="cookbook.useRecipe(recipe)">Use</button>
+            </li>
+        </ul>
+    </div>
+
+    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+</body>
+</html>
